@@ -1,0 +1,87 @@
+Aplicacion-Nomina/
+|
+├── src/
+│   ├── config/
+│   │   ├── database.js
+│   │   ├── environment.js
+│   │   └── constants.js
+│   │
+│   ├── models/
+│   │   ├── Employee.js
+│   │   ├── Payroll.js
+│   │   ├── Deduction.js
+│   │   └── PayrollHistory.js
+│   │
+│   ├── controllers/
+│   │   ├── employeeController.js
+│   │   ├── payrollController.js
+│   │   └── reportController.js
+│   │
+│   ├── services/
+│   │   ├── payrollService.js
+│   │   ├── calculationService.js
+│   │   ├── emailService.js
+│   │   └── pdfService.js
+│   │
+│   ├── routes/
+│   │   ├── employeeRoutes.js
+│   │   ├── payrollRoutes.js
+│   │   └── reportRoutes.js
+│   │
+│   ├── middleware/
+│   │   ├── authentication.js
+│   │   ├── errorHandler.js
+│   │   └── validation.js
+│   │
+│   ├── utils/
+│   │   ├── logger.js
+│   │   ├── dateHelper.js
+│   │   ├── validators.js
+│   │   └── formatters.js
+│   │
+│   ├── database/
+│   │   ├── migrations/
+│   │   │   ├── 001_create_employees_table.sql
+│   │   │   ├── 002_create_payroll_table.sql
+│   │   │   └── 003_create_deductions_table.sql
+│   │   └── seeds/
+│   │       └── seedData.sql
+│   │
+│   └── app.js (archivo principal)
+│
+├── tests/
+│   ├── unit/
+│   │   ├── payrollService.test.js
+│   │   ├── calculationService.test.js
+│   │   └── validators.test.js
+│   │
+│   └── integration/
+│       ├── employeeAPI.test.js
+│       └── payrollAPI.test.js
+│
+├── public/
+│   ├── css/
+│   │   └── styles.css
+│   ├── js/
+│   │   └── script.js
+│   └── images/
+│
+├── views/ (si usa templating)
+│   ├── dashboard.html
+│   ├── employees.html
+│   └── payroll.html
+│
+├── docs/
+│   ├── API.md
+│   ├── SETUP.md
+│   ├── DATABASE.md
+│   └── GUIA_DESARROLLO.md
+│
+├── .env.example
+├── .gitignore
+├── .eslintrc.json
+├── .prettierrc
+├── package.json
+├── package-lock.json
+├── README.md
+└── server.js (punto de entrada)

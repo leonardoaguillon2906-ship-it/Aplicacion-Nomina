@@ -1,0 +1,58 @@
+# Dependencias
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# Variables de entorno
+.env
+.env.local
+.env.*.local
+
+# Archivos del sistema
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+
+# Logs
+logs/
+*.log
+
+# Temporal
+tmp/
+temp/
+*.tmp
+
+# Base de datos
+*.sqlite
+*.sqlite3
+dump.sql
+
+# Uploads
+uploads/
+downloads/
+
+# Coverage
+coverage/
+.nyc_output/
+
+# Build
+dist/
+build/
+
+# Testing
+.jest/
+
+# Docker
+docker-compose.override.yml

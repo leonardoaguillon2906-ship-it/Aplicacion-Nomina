@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Colnecta — Conciliador</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0C1B33;--paper:#FAFBF7;--matched:#0FA36B;--matched-soft:#E7F6EF;
+  --brand:#2D5BFF;--brand-dark:#1E42C8;--line:#DDE3EC;--muted:#5B6B84;
+  --display:'Space Grotesk',sans-serif;--body:'Inter',sans-serif;--mono:'IBM Plex Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--body);color:var(--ink);background:var(--paper);line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1240px;margin:0 auto;padding:0 24px}
+
+.nav{position:sticky;top:0;z-index:50;background:rgba(250,251,247,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:62px}
+.logo{font-family:var(--display);font-weight:700;font-size:1.25rem;display:flex;align-items:center;gap:.5rem}
+
+.nav-tabs{display:flex;background:#EEF1F6;padding:4px;border-radius:10px;gap:4px}
+.nav-tab{padding:.4rem 1rem;font-size:.85rem;font-weight:600;border-radius:8px;color:var(--muted);transition:all .15s}
+.nav-tab.active{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+
+.badge-trial{background:var(--matched-soft);color:var(--matched);font-family:var(--mono);font-size:.72rem;padding:.3rem .7rem;border-radius:999px;font-weight:600}
+
+main{padding:2.5rem 0 5rem}
+.steps{display:flex;align-items:center;gap:1.5rem;margin-bottom:2rem;font-family:var(--mono);font-size:.8rem;color:var(--muted)}
+.step{display:flex;align-items:center;gap:.5rem}
+.step-num{width:24px;height:24px;border-radius:50%;background:var(--line);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:.75rem}
+.step.active .step-num{background:var(--brand);color:#fff}
+.step.active{color:var(--ink);font-weight:600}
+.step-line{flex:1;height:1px;background:var(--line);max-width:40px}
+
+h1{font-family:var(--display);font-size:1.65rem;font-weight:700;letter-spacing:-.02em;margin-bottom:.4rem}
+.sub{color:var(--muted);font-size:.95rem;margin-bottom:2rem}
+
+.upload-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2rem}
+.upload-box{background:#fff;border:2px dashed var(--line);border-radius:14px;padding:3rem 2rem;text-align:center;cursor:pointer;transition:all .15s}
+.upload-box:hover{border-color:var(--brand);background:#F8FAFF}
+.upload-icon{font-size:2rem;margin-bottom:1rem}
+.upload-box h3{font-family:var(--display);font-size:1rem;margin-bottom:.4rem}
+.upload-box p{color:var(--muted);font-size:.85rem}
+
+.foot-info{text-align:center;color:var(--muted);font-size:.9rem}
+.foot-info a{color:var(--brand);font-weight:600;text-decoration:underline}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a class="logo" href="/nomina-automatica">Colnecta</a>
+    
+    <div class="nav-tabs">
+      <a href="/conciliacion" class="nav-tab active">Conciliación</a>
+      <a href="/nomina-automatica" class="nav-tab">Nómina</a>
+    </div>
+
+    <span class="badge-trial">PRUEBA GRATIS · 14 días</span>
+  </div>
+</nav>
+
+<main class="wrap">
+  <div class="steps">
+    <div class="step active"><div class="step-num">1</div> Cargar archivos</div>
+    <div class="step-line"></div>
+    <div class="step"><div class="step-num">2</div> Conciliar</div>
+    <div class="step-line"></div>
+    <div class="step"><div class="step-num">3</div> Revisar y exportar</div>
+  </div>
+
+  <h1>Nueva conciliación</h1>
+  <p class="sub">Sube el extracto de tu banco y el auxiliar de tu ERP. Formato CSV con columnas de fecha, descripción y monto (Colnecta las detecta solo).</p>
+
+  <div class="upload-grid">
+    <div class="upload-box" onclick="alert('Funcionalidad de carga de extracto bancario en desarrollo')">
+      <div class="upload-icon">🏦</div>
+      <h3>Extracto bancario</h3>
+      <p>Arrastra el CSV aquí o haz clic para buscarlo</p>
+    </div>
+    <div class="upload-box" onclick="alert('Funcionalidad de carga de auxiliar contable en desarrollo')">
+      <div class="upload-icon">📊</div>
+      <h3>Auxiliar contable (ERP)</h3>
+      <p>Arrastra el CSV aquí o haz clic para buscarlo</p>
+    </div>
+  </div>
+
+  <div class="foot-info">
+    ¿Quieres probar sin tus archivos? <a href="#">Usar datos de ejemplo</a>
+  </div>
+</main>
+
+</body>
+</html>

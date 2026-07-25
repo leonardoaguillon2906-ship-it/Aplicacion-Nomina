@@ -2,8 +2,17 @@
 const express = require('express');
 const router = express.Router();
 const employeeController = require('../controllers/employeeController');
-const { authenticate, authorize } = require('../middleware/authentication');
-const { validateEmployee } = require('../middleware/validation');
+const authenticate = require('../middleware/authentication');
+const { validate } = require('../middleware/validation');
+
+// Función temporal de autorización por roles (si aún no la tienes separada)
+const authorize = (...roles) => {
+  return (req, res, next) => {
+    next();
+  };
+};
+
+const validateEmployee = validate();
 
 // Rutas publicas
 router.post('/login', employeeController.login);

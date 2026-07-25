@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplicación de Nómina</title>
+    <style>
+        body { font-family: system-ui, -apple-system, sans-serif; background-color: #0f172a; color: #f8fafc; margin: 0; padding: 0; }
+        
+        /* Franja superior de líneas nacionales */
+        .top-bar {
+            background-color: #0f172a;
+            color: #94a3b8;
+            font-size: 0.8rem;
+            padding: 8px 30px;
+            border-bottom: 1px solid #1e293b;
+            letter-spacing: 0.02em;
+        }
+
+        /* Barra de Navegación */
+        nav { background: #1e293b; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #334155; }
+        .logo { font-weight: bold; font-size: 1.25rem; color: #38bdf8; display: flex; align-items: center; gap: 8px; }
+        .nav-links { display: flex; gap: 20px; align-items: center; }
+        .nav-links a { color: #cbd5e1; text-decoration: none; font-weight: 500; transition: color 0.2s; }
+        .nav-links a:hover { color: #38bdf8; }
+
+        /* Estilo para el botón de Iniciar Sesión en el Nav */
+        .btn-login {
+            background: rgba(56, 189, 248, 0.1);
+            color: #38bdf8 !important;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            padding: 8px 16px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+        .btn-login:hover {
+            background: #38bdf8;
+            color: #0f172a !important;
+        }
+
+        /* Animaciones CSS Fluidas */
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .hero-banner-anim {
+            animation: slideInLeft 1s ease-out forwards;
+        }
+
+        .hero-image-anim {
+            animation: slideInRight 1s ease-out forwards;
+        }
+
+        .hero-btn-interactive {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .hero-btn-interactive:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(56, 189, 248, 0.4);
+        }
+
+        /* Banner Estilo Financiero / Consultoría */
+        .hero-banner {
+            background: #111c30;
+            border-bottom: 1px solid #334155;
+            padding: 60px 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 92%;
+            max-width: 1600px;
+            margin: 40px auto;
+            border-radius: 24px;
+            box-shadow: 0 25px 35px -10px rgba(0, 0, 0, 0.4);
+            gap: 60px;
+            flex-wrap: wrap;
+            overflow: hidden;
+        }
+        .hero-content {
+            flex: 1;
+            min-width: 400px;
+            text-align: left;
+        }
+        .hero-content h1 {
+            font-size: 3.4rem;
+            line-height: 1.15;
+            margin-bottom: 30px;
+            color: #ffffff;
+        }
+        .hero-content h1 span {
+            color: #38bdf8;
+        }
+        .hero-content p {
+            color: #94a3b8;
+            font-size: 1.3rem;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            text-align: left;
+        }
+        .hero-content p strong {
+            color: #cbd5e1;
+        }
+        .hero-btn {
+            background: #d97706;
+            color: white;
+            padding: 16px 32px;
+            font-size: 1.2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            transition: background 0.2s;
+            box-shadow: 0 4px 6px -1px rgba(217, 119, 6, 0.3);
+        }
+        .hero-btn:hover {
+            background: #b45309;
+        }
+        .hero-image-container {
+            flex: 1.2;
+            min-width: 450px;
+            background: linear-gradient(135deg, #334155 0%, #0f172a 100%);
+            height: 440px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #475569;
+            box-shadow: 0 15px 25px -5px rgba(0,0,0,0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-image-container span {
+            color: #64748b;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Franja Superior -->
+    <div class="top-bar">
+        Líneas nacionales: 316 301 6937 - 300 669 6513 - 318 206 4911
+    </div>
+
+    <!-- Barra de Navegación con Inicio de Sesión -->
+    <nav>
+        <div class="logo">⚡ Aplicación Nómina</div>
+        <div class="nav-links">
+            <a href="/">Inicio</a>
+            <a href="/api/departamentos">Departamentos</a>
+            <a href="/nomina">Nómina Simple</a>
+            <a href="/nomina-automatica">Nómina Automática</a>
+            <a href="/login" class="btn-login">
+                👤 Iniciar Sesión
+            </a>
+        </div>
+    </nav>
+
+    <!-- Banner Principal Animado: Automatización y Conciliación Expandido -->
+    <div class="hero-banner">
+        <div class="hero-content hero-banner-anim">
+            <h1>Automatización de Nómina y <span>Conciliación Inteligente</span></h1>
+            <p>Optimice la gestión financiera de su empresa con nuestro sistema avanzado. Automatice el cálculo de pagos, elimine errores operativos y logre una <strong>conciliación precisa</strong> en tiempo récord para un mayor control administrativo.</p>
+            <a href="/nomina-automatica" class="hero-btn hero-btn-interactive">Comenzar Automatización</a>
+        </div>
+        <div class="hero-image-container hero-image-anim">
+            <img src="/images/financiero.png" alt="Automatización de nómina y conciliación" style="width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease;" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">
+        </div>
+    </div>
+
+</body>
+</html>

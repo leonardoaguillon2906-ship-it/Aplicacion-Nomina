@@ -82,5 +82,10 @@ app.use((req, res) => {
 
 // Middleware de manejo de errores (debe ser el ultimo)
 app.use(errorHandler);
+// Definir el puerto del servidor
+const PORT = process.env.PORT || 3000;
 
+app.listen(PORT, '0.0.0.0', () => {
+    logger.info(`Servidor de nómina corriendo exitosamente en el puerto ${PORT}`);
+});
 module.exports = app;

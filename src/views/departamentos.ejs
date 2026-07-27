@@ -2,34 +2,172 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Lista de Departamentos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Departamentos</title>
+    <!-- 1. CDN de Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        body { font-family: Arial, sans-serif; margin: 40px; background: #121212; color: #fff; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid #333; padding: 12px; text-align: left; }
-        th { background: #1f1f1f; }
+        :root { 
+            --brand: #3b82f6; 
+            --matched: #22c55e; 
+            --bg: #0f172a;       /* Fondo general oscuro */
+            --card: #1e293b;     /* Fondo de las tarjetas más claro que el body */
+            --border: #334155;   /* Bordes sutiles y elegantes */
+            --text-main: #f8fafc;/* Texto principal claro */
+            --text-muted: #94a3b8;/* Texto secundario */
+        }
+        body { font-family: system-ui, -apple-system, sans-serif; background-color: var(--bg); color: var(--text-main); margin: 0; padding: 0; }
+        .main-container { max-width: 1200px; margin: 30px auto; padding: 0 20px; animation: fadeIn 0.4s ease-out; }
+        h1 { font-size: 1.75rem; margin-bottom: 5px; color: var(--text-main); letter-spacing: -0.025em; }
+        p.subtitle { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 25px; line-height: 1.5; }
+
+        .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.2); }
+        
+        /* KPIs */
+        .kpis-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-bottom: 25px; }
+        .kpi-card { background: var(--card); border: 1px solid var(--border); padding: 18px; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.2); position: relative; overflow: hidden; }
+        .kpi-card::after { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--brand); opacity: 0.8; }
+        .kpi-card span { font-size: 0.75rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+        .kpi-card h2 { margin: 8px 0 0 0; font-size: 1.5rem; color: var(--text-main); font-weight: 700; }
+
+        /* Buscador */
+        .search-bar-container { display: flex; gap: 10px; margin-bottom: 15px; align-items: center; width: 300px; }
+        .search-input { width: 100%; padding: 8px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 0.85rem; background: #0f172a; color: var(--text-main); }
+        .search-input:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2); }
+
+        /* Tabla */
+        table { width: 100%; border-collapse: collapse; font-size: 0.85rem; white-space: nowrap; }
+        th, td { padding: 12px 16px; border-bottom: 1px solid var(--border); text-align: left; color: var(--text-main); }
+        th { background-color: #1e293b; color: var(--text-muted); font-weight: 600; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em; }
+        tr { transition: background-color 0.15s; }
+        tr:hover td { background-color: #334155; }
+        .presupuesto { font-weight: bold; color: var(--matched); }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
     <%- include('partials/nav') %>
-    <h1>Departamentos de la Empresa</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Presupuesto</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% departamentos.forEach(dep => { %>
-                <tr>
-                    <td><%= dep.id %></td>
-                    <td><%= dep.nombre %></td>
-                    <td>$<%= dep.presucuesto %></td>
-                </tr>
-            <% }) %>
-        </tbody>
-    </table>
+
+    <div class="main-container">
+        <h1>Dashboard</h1>
+        <p class="subtitle">Resumen general y control financiero de los departamentos de la empresa.</p>
+
+        <!-- KPIs dinámicos calculados desde el servidor -->
+        <div class="kpis-grid">
+            <div class="kpi-card">
+                <span>Total Departamentos</span>
+                <h2><%= departamentos.length %></h2>
+            </div>
+            <div class="kpi-card">
+                <span>Presupuesto Global</span>
+                <h2 style="color: var(--matched);">
+                    $<%= departamentos.reduce((acc, dep) => acc + Number(dep.presupuesto || 0), 0).toLocaleString('es-CO') %>
+                </h2>
+            </div>
+            <div class="kpi-card">
+                <span>Promedio por Departamento</span>
+                <h2 style="color: var(--brand);">
+                    $<%= departamentos.length ? Math.round(departamentos.reduce((acc, dep) => acc + Number(dep.presupuesto || 0), 0) / departamentos.length).toLocaleString('es-CO') : 0 %>
+                </h2>
+            </div>
+        </div>
+
+        <!-- Tarjeta del Gráfico Financiero -->
+        <div class="card">
+            <h3 style="margin-top: 0; margin-bottom: 15px; font-size: 0.95rem; color: var(--text-main);">Distribución de Presupuesto por Departamento</h3>
+            <div style="position: relative; height: 300px; width: 100%;">
+                <canvas id="chartPresupuestos"></canvas>
+            </div>
+        </div>
+
+        <!-- Tabla y Buscador -->
+        <div class="card" style="padding: 0; overflow: hidden;">
+            <div style="padding: 15px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: var(--card); flex-wrap: wrap; gap: 10px;">
+                <h3 style="margin:0; font-size: 0.95rem; color: var(--text-main);">Listado de registros</h3>
+                <div class="search-bar-container">
+                    <input type="text" id="inputBuscar" class="search-input" placeholder="🔍 Buscar departamento..." oninput="filtrarTabla()">
+                </div>
+            </div>
+            <div style="overflow-x: auto;">
+                <table id="tablaDepartamentos">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Presupuesto</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% departamentos.forEach(dep => { %>
+                            <tr>
+                                <td><%= dep.id %></td>
+                                <td><%= dep.nombre %></td>
+                                <td class="presupuesto">$<%= Number(dep.presupuesto || 0).toLocaleString('es-CO') %></td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function filtrarTabla() {
+            const filtro = document.getElementById('inputBuscar').value.toLowerCase();
+            const filas = document.querySelectorAll('#tablaDepartamentos tbody tr');
+
+            filas.forEach(fila => {
+                const textoFila = fila.textContent.toLowerCase();
+                fila.style.display = textoFila.includes(filtro) ? '' : 'none';
+            });
+        }
+
+        // Renderizar Gráfico con los datos inyectados por EJS desde el servidor
+        const ctx = document.getElementById('chartPresupuestos').getContext('2d');
+        
+        // Mapeamos los datos de los departamentos de forma segura para JavaScript
+        const nombresDepto = <%- JSON.stringify(departamentos.map(d => d.nombre)) %>;
+        const presupuestosDepto = <%- JSON.stringify(departamentos.map(d => Number(d.presupuesto || 0))) %>;
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: nombresDepto,
+                datasets: [{
+                    label: 'Presupuesto ($)',
+                    data: presupuestosDepto,
+                    backgroundColor: 'rgba(59, 130, 246, 0.5)',
+                    borderColor: '#3b82f6',
+                    borderWidth: 2,
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        labels: { color: '#f8fafc', font: { family: 'system-ui' } }
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: { color: '#334155' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    y: {
+                        grid: { color: '#334155' },
+                        ticks: { 
+                            color: '#94a3b8',
+                            callback: function(value) {
+                                return '$' + value.toLocaleString('es-CO');
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 </html>
